@@ -43,7 +43,7 @@ namespace OneHourJam456
             if (_enemies == 0)
             {
                 _winText.gameObject.SetActive(true);
-                _winText.text = $"You won!\nYour time: {_otherTime:n2}";
+                _winText.text = $"You won!\nYour time: {_otherTime:n2}s";
             }
         }
 
