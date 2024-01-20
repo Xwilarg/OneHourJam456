@@ -47,6 +47,14 @@ namespace OneHourJam456
             }
         }
 
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            _winText.gameObject.SetActive(true);
+            _winText.text = $"You lost";
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
+        }
+
         private void Awake()
         {
             Instance = this;
