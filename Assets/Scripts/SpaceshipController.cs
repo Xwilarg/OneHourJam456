@@ -26,11 +26,11 @@ namespace OneHourJam456
         private float _startGame = 3f;
         private float _otherTime;
 
-        private float _score;
-
         private int _enemies;
 
         private float _timeout;
+
+        public bool CanMove { private set; get; }
 
         public void RegisterEnemy()
         {
@@ -74,6 +74,7 @@ namespace OneHourJam456
                 {
                     _timer.gameObject.SetActive(false);
                     _source.Play();
+                    CanMove = true;
                 }
                 else
                 {
@@ -94,7 +95,6 @@ namespace OneHourJam456
         {
             if (value.performed && _source.isPlaying && _timeout <= 0f)
             {
-
                 var r = _source.time % 1;
 
                 if ((r > .15f & r < .35f) || (r > .65f & r < .85f))
