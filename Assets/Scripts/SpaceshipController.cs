@@ -30,6 +30,8 @@ namespace OneHourJam456
 
         private int _enemies;
 
+        private float _timeout;
+
         public void RegisterEnemy()
         {
             _enemies++;
@@ -52,6 +54,11 @@ namespace OneHourJam456
 
         private void Update()
         {
+            if (_timeout > 0f)
+            {
+                _timeout -= Time.deltaTime;
+                    }
+
             if (_startGame > 0f)
             {
                 _startGame -= Time.time;
@@ -77,7 +84,7 @@ namespace OneHourJam456
 
         public void OnHit(InputAction.CallbackContext value)
         {
-            if (value.performed && _source.isPlaying)
+            if (value.performed && _source.isPlaying && _timeout <= 0f)
             {
 
                 var r = _source.time % 1;
@@ -86,6 +93,7 @@ namespace OneHourJam456
                 {
                     _timeSpent.text = "No";
                     _timeSpent.color = Color.red;
+                    _timeout = 2f;
                 }
                 else
                 {
