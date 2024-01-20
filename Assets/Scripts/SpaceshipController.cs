@@ -69,8 +69,8 @@ namespace OneHourJam456
 
             if (_startGame > 0f)
             {
-                _startGame -= Time.time;
-                if (_startGame <= 0f )
+                _startGame -= Time.deltaTime;
+                if (_startGame <= 0f)
                 {
                     _timer.gameObject.SetActive(false);
                     _source.Play();
