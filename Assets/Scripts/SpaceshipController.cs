@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +6,8 @@ namespace OneHourJam456
 {
     public class SpaceshipController : MonoBehaviour
     {
+        public static SpaceshipController Instance { get; private set; }
+
         [SerializeField]
         private TMP_Text _timer;
 
@@ -19,13 +20,34 @@ namespace OneHourJam456
         [SerializeField]
         private TMP_Text _timeSpent;
 
+        [SerializeField]
+        private TMP_Text _winText;
+
         private float _startGame = 3f;
+        private float _otherTime;
 
         private float _score;
 
+        private int _enemies;
+
+        public void RegisterEnemy()
+        {
+            _enemies++;
+        }
+        public void DestroyEnemy()
+        {
+            _enemies--;
+
+            if (_enemies == 0)
+            {
+                _winText.gameObject.SetActive(true);
+                _winText.text = $"You won!\nYour time: {_otherTime:n2}";
+            }
+        }
+
         private void Awake()
         {
-            
+            Instance = this;
         }
 
         private void Update()
@@ -43,6 +65,10 @@ namespace OneHourJam456
                     _timer.text = Mathf.CeilToInt(_startGame).ToString();
                 }
             }
+            else
+            {
+                _otherTime += Time.deltaTime;
+            }
 
             Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (mouse - (Vector2)transform.position).normalized;
@@ -51,7 +77,7 @@ namespace OneHourJam456
 
         public void OnHit(InputAction.CallbackContext value)
         {
-            if (value.performed)
+            if (value.performed && _source.isPlaying)
             {
 
                 var r = _source.time % 1;
